@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Be Safe .Inc XDR Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#121722;--muted:#5e6876;--line:#aeb6c2;--dark:#111820;--gold:#b9944f;--red:#d3152b;--green:#08774d}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fafafa,#d9dde4 34%,#aeb6c2 65%,#f2f3f5)}
+button,input,select{font-family:inherit}.hidden{display:none!important}.mono{font-family:"JetBrains Mono",monospace}
+.metal{background:linear-gradient(145deg,#fff,#d7dbe2 28%,#f8f9fa 48%,#abb3bf 76%,#eef0f4);border:1px solid rgba(70,80,96,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 24px 70px rgba(15,20,30,.22)}
+.btn{border:0;border-radius:12px;padding:11px 14px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.16)}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:#111820;color:white}.silver{background:linear-gradient(145deg,#fff,#cbd1db);border:1px solid #95a0af;color:#111820}.danger{background:#b42335;color:white}.good{background:#08774d;color:white}
+.badge{display:inline-flex;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.08em}.critical{background:#ffe1e6;color:#97182a}.high{background:#ffedc9;color:#815000}.medium{background:#e5edff;color:#234985}.low{background:#dff6ed;color:#0b6c49}
+.logo{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;font-weight:950;position:relative;overflow:hidden}.logo:before{content:"";position:absolute;inset:8px;border:1px solid rgba(185,148,79,.82);border-radius:16px}.logo:after{content:"";position:absolute;width:100px;height:18px;left:-35px;top:10px;background:rgba(255,255,255,.55);transform:rotate(-35deg)}.mark{position:relative;z-index:1;text-align:center;line-height:.9}.mark b{font-size:22px}.mark span{display:block;margin-top:5px;font-size:8px;letter-spacing:.22em;color:#5f6875}
+.login{max-width:1220px;margin:0 auto;padding:34px 22px}.brand{display:flex;gap:14px;align-items:center;margin-bottom:22px}.brand h1{margin:0;font-size:28px}.brand p{margin:4px 0 0;color:var(--muted);font-weight:700}
+.hero{border-radius:34px;padding:34px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px}.hero h2{font-size:54px;line-height:1;margin:12px 0;letter-spacing:-2.2px}.hero p{font-size:18px;line-height:1.55;color:#3f4856}.kicker{text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:950;color:#606a78}
+.form{border-radius:24px;background:rgba(255,255,255,.58);border:1px solid rgba(0,0,0,.12);padding:20px}.form label{display:block;font-weight:950;margin:12px 0 7px}.form input,.form select{width:100%;border:1px solid #98a2b2;border-radius:14px;padding:13px 14px;font-weight:800;font-size:16px;background:white}
+.featuregrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.feat{border-radius:20px;padding:15px;background:rgba(255,255,255,.55);border:1px solid rgba(0,0,0,.12)}.feat b{display:block;font-size:19px}.feat span{font-size:13px;color:#596474;line-height:1.4}
+.app{display:grid;grid-template-columns:272px 1fr 348px;gap:14px;padding:14px;min-height:100vh}.side,.main,.right{border-radius:28px;padding:14px}.side,.right{position:sticky;top:14px;height:calc(100vh - 28px);overflow:auto}.main{min-height:calc(100vh - 28px)}
+.navTitle{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:#6b7482;font-weight:950;margin:16px 8px 10px}.nav{display:flex;gap:10px;align-items:center;border-radius:16px;padding:12px;margin-bottom:6px;font-weight:900;cursor:pointer;border:1px solid transparent}.nav:hover,.nav.active{background:rgba(255,255,255,.65);border-color:rgba(0,0,0,.12)}.nav i{width:10px;height:10px;border-radius:50%;background:#667386;box-shadow:0 0 0 4px rgba(102,115,134,.13)}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.top h2{font-size:31px;margin:0;letter-spacing:-1px}.top p{margin:7px 0 0;color:#5d6775;line-height:1.42}.live{font-weight:900;color:#344050}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#08774d;animation:pulse 1.5s infinite}@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(8,119,77,0)}100%{box-shadow:0 0 0 0 rgba(8,119,77,0)}}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}.kpi{border-radius:20px;background:rgba(255,255,255,.58);border:1px solid rgba(0,0,0,.12);padding:14px}.kpi small{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#667080;font-weight:950}.kpi b{font-size:27px;display:block;margin-top:7px}
+.panel{border-radius:24px;background:rgba(255,255,255,.57);border:1px solid rgba(0,0,0,.12);padding:15px;margin-bottom:14px}.panel h3{margin:0 0 10px}.panel p{color:#596374;line-height:1.5}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.table{width:100%;border-collapse:separate;border-spacing:0 8px}.table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#697381;padding:0 10px}.table td{background:rgba(255,255,255,.64);border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1);padding:12px 10px;font-size:13px}.table td:first-child{border-left:1px solid rgba(0,0,0,.1);border-radius:14px 0 0 14px}.table td:last-child{border-right:1px solid rgba(0,0,0,.1);border-radius:0 14px 14px 0}
+.term{background:#0f141d;color:#e8edf5;border-radius:22px;padding:14px;min-height:340px}.term pre{white-space:pre-wrap;font-size:12px;line-height:1.55}.term input{width:100%;background:#090d13;color:white;border:1px solid #303a48;border-radius:12px;padding:12px;margin-top:10px}
+.graph{border-radius:28px;background:linear-gradient(145deg,#171c25,#0f131b);padding:18px;min-height:500px;position:relative;overflow:hidden}.graph:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:32px 32px}.graph svg{position:relative;z-index:1}.link{stroke:#94a0b4;stroke-width:2;stroke-dasharray:8 7;animation:dash 5s linear infinite}.hotlink{stroke:#ffb4be;stroke-width:3;stroke-dasharray:9 7;animation:dash 2.2s linear infinite}@keyframes dash{to{stroke-dashoffset:-80}}
+.courseLayout{display:grid;grid-template-columns:350px 1fr;gap:14px}.step{border-radius:18px;padding:13px;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.12);cursor:pointer;margin-bottom:8px}.step.active{background:#111820;color:#fff}.step.done{border-color:#08774d}.step span{display:block;font-size:12px;color:#657080;margin-top:4px}.step.active span{color:#d3d8e0}.lesson{border-radius:24px;background:rgba(255,255,255,.62);border:1px solid rgba(0,0,0,.12);padding:20px;min-height:520px}.lesson h3{font-size:30px;margin:8px 0}.callout{border-left:5px solid var(--gold);background:rgba(255,255,255,.68);border-radius:14px;padding:12px 14px;line-height:1.5}.choice{display:grid;gap:8px;margin-top:10px}.progressBox{height:12px;border-radius:999px;background:#c3c9d2;overflow:hidden}.progressBar{height:100%;background:#111820;width:0%;transition:.25s}
+.playStep{display:flex;justify-content:space-between;gap:10px;align-items:center;border-radius:16px;background:rgba(255,255,255,.66);border:1px solid rgba(0,0,0,.1);padding:11px;margin-bottom:8px}.playStep.done{border-color:#08774d;background:#e6f7ef}
+.tourOverlay{position:fixed;inset:0;background:rgba(10,13,19,.56);z-index:90}.tourBox{position:fixed;z-index:92;width:min(520px,calc(100vw - 30px));border-radius:24px;padding:18px}.arrow{position:fixed;z-index:93;color:red;font-size:76px;font-weight:950;text-shadow:0 4px 12px rgba(0,0,0,.35);animation:bounce .7s infinite alternate}@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(10px)}}.highlight{position:relative;z-index:91;box-shadow:0 0 0 5px rgba(211,21,43,.8),0 0 0 9999px rgba(10,13,19,.1)!important}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111820;color:#fff;border-radius:999px;padding:13px 18px;font-weight:850;z-index:120}
+.certScreen{max-width:1180px;margin:0 auto;padding:32px 20px}.certificate{width:1060px;height:780px;position:relative;overflow:hidden;border-radius:28px;padding:54px 70px;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.9),transparent 35%),linear-gradient(135deg,#fff,#d8dce2 32%,#fff 50%,#a8b0bc 100%);border:12px solid #151922;outline:5px solid var(--gold)}.certificate:before{content:"";position:absolute;inset:29px;border:2px solid rgba(185,148,79,.76);border-radius:18px}.certTitle{text-align:center;font-family:"Playfair Display",serif;font-size:54px;margin:38px 0 6px}.certSub{text-align:center;text-transform:uppercase;letter-spacing:.24em;color:#5e6875;font-weight:950;font-size:13px}.certName{text-align:center;font-family:"Playfair Display",serif;font-size:44px;font-weight:800;border-bottom:2px solid var(--gold);max-width:800px;margin:28px auto 10px;padding-bottom:8px}.certText{text-align:center;line-height:1.6;font-size:17px;max-width:860px;margin:0 auto}.learned{max-width:860px;margin:20px auto 0;padding:14px 18px;border-radius:20px;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.12);line-height:1.5}.script{font-family:"Great Vibes",cursive;font-size:42px}.role{border-top:1px solid #111820;margin-top:8px;padding-top:8px;font-weight:850}
+@media(max-width:1200px){.app{grid-template-columns:1fr}.side,.right{position:relative;height:auto}.kpis{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.courseLayout,.grid2{grid-template-columns:1fr}.certificate{transform:scale(.72);transform-origin:top left}.certScreen{height:680px;overflow:auto}}
+@media(max-width:720px){.hero h2{font-size:38px}.featuregrid,.grid3,.kpis{grid-template-columns:1fr}.certificate{transform:scale(.45)}.certScreen{height:470px}}
+</style>
+</head>
+<body>
+<section id="login" class="login">
+ <div class="brand"><div class="logo metal"><div class="mark"><b>BS</b><span>SAFE</span></div></div><div><h1>Be Safe .Inc XDR Operations Platform</h1><p>EDR • XDR • SIEM • SOAR • ITDR • Cloud • NDR • Email Security</p></div></div>
+ <div class="hero metal">
+  <div>
+   <div class="kicker">Realistic SOC Console</div>
+   <h2>Uma central moderna de operações de segurança criada para detecção, investigação e resposta em tempo real.</h2>
+   <p>Console funcional para simular uma plataforma madura de XDR: inventário, detecções, threat graph, SIEM pesquisável, SOAR executável, ITDR, cloud, NDR, e-mail, exposure management e curso guiado com seta vermelha.</p>
+   <div class="form">
+    <label>Nome do aluno</label><input id="studentName" placeholder="Digite o nome para o certificado"/>
+    <label>Perfil</label><select id="profile"><option>SOC Analyst</option><option>Detection Engineer</option><option>Incident Responder</option><option>Sales Engineer</option></select>
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button id="enterBtn" class="btn primary" type="button" onclick="start()">Entrar</button><button id="demoBtn" class="btn silver" type="button" onclick="document.getElementById('studentName').value='Analista Be Safe'">Usar demo</button></div>
+   </div>
+  </div>
+  <div class="featuregrid">
+   <div class="feat"><b>SIEM funcional</b><span>Consultas, filtros, resultados, estatísticas e correlação.</span></div>
+   <div class="feat"><b>SOAR funcional</b><span>Playbooks com etapas executáveis e log de ações.</span></div>
+   <div class="feat"><b>Threat Graph</b><span>Endpoint, identidade, cloud, NDR e e-mail conectados.</span></div>
+   <div class="feat"><b>Tour guiado</b><span>Botão dedicado, seta vermelha e explicações por feature.</span></div>
+   <div class="feat"><b>ITDR</b><span>Usuários, privilégios, sessões, MFA e OAuth.</span></div>
+   <div class="feat"><b>Cloud</b><span>CSPM, CWPP, containers, workloads e chaves.</span></div>
+  </div>
+ </div>
+</section>
+
+<section id="app" class="app hidden">
+ <aside class="side metal" id="sideNav">
+  <div class="brand"><div class="logo metal"><div class="mark"><b>BS</b><span>SAFE</span></div></div><div><h1 style="font-size:20px">Be Safe XDR</h1><p id="who"></p></div></div>
+  <button id="tourBtn" class="btn danger" style="width:100%;margin-bottom:10px" type="button">Iniciar tour guiado</button>
+  <div class="navTitle">Operations</div>
+  <div class="nav active" data-view="overview"><i></i>Overview</div>
+  <div class="nav" data-view="detections"><i></i>Detections</div>
+  <div class="nav" data-view="assets"><i></i>Endpoint Inventory</div>
+  <div class="nav" data-view="graph"><i></i>Threat Graph</div>
+  <div class="nav" data-view="siem"><i></i>SIEM Search</div>
+  <div class="nav" data-view="soar"><i></i>SOAR Playbooks</div>
+  <div class="nav" data-view="itdr"><i></i>ITDR</div>
+  <div class="nav" data-view="cloud"><i></i>Cloud Security</div>
+  <div class="nav" data-view="ndr"><i></i>NDR</div>
+  <div class="nav" data-view="email"><i></i>Email Security</div>
+  <div class="nav" data-view="exposure"><i></i>Exposure</div>
+  <div class="nav" data-view="cases"><i></i>Cases</div>
+  <div class="nav" data-view="academy"><i></i>Curso Guiado</div>
+ </aside>
+ <main class="main metal">
+  <div class="top">
+   <div><h2 id="title"></h2><p id="desc"></p><p class="live"><span class="dot"></span> Real-time telemetry ativo • <span id="clock"></span></p></div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn silver" id="newRule">Nova regra</button><button class="btn primary" id="simBtn">Simular incidente</button></div>
+  </div>
+  <div id="content"></div>
+ </main>
+ <aside class="right metal" id="rightPanel">
+  <div class="panel"><h3>Progresso</h3><div class="progressBox"><div id="progress" class="progressBar"></div></div><p><b id="progressText">0%</b> concluído</p><button id="certBtn" class="btn silver" disabled>Certificado bloqueado</button></div>
+  <div class="panel"><h3>Resposta rápida</h3><button class="btn danger quick" data-action="Host WS-2044 isolado">Isolar host</button> <button class="btn silver quick" data-action="Hash bloqueado globalmente">Bloquear hash</button> <button class="btn silver quick" data-action="Sessões do usuário revogadas">Revogar sessão</button> <button class="btn good quick" data-action="Caso escalado para IR">Escalar IR</button></div>
+  <div class="panel"><h3>Action Log</h3><div id="actionLog" class="mono" style="font-size:12px;line-height:1.6">Nenhuma ação executada.</div></div>
+ </aside>
+</section>
+
+<section id="certScreen" class="certScreen hidden">
+ <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap"><button id="downloadCert" class="btn primary">Baixar certificado PNG</button><button id="backBtn" class="btn silver">Voltar</button></div>
+ <div id="certificate" class="certificate">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1"><div><b style="font-size:25px">Be Safe .Inc Academy</b><div class="kicker">EDR/XDR Operations Training</div></div><div class="logo metal"><div class="mark"><b>BS</b><span>SAFE</span></div></div></div>
+  <div class="certTitle">Certificado de Conclusão</div><div class="certSub">Curso guiado de EDR/XDR com SIEM e SOAR</div><div id="certName" class="certName"></div>
+  <p class="certText">Certificamos que concluiu o tour operacional da plataforma Be Safe .Inc XDR, realizando atividades de investigação, hunting, correlação SIEM, resposta SOAR e contenção orientada por evidências.</p>
+  <div class="learned"><b>Resumo do que foi aprendido:</b> telemetria EDR, árvore de processos, saúde de agentes, inventário, detecção comportamental, investigação XDR, hunting, consulta SIEM, playbooks SOAR, ITDR, cloud security, NDR, threat intelligence, gestão de casos e resposta a incidente com preservação de evidências.</div>
+  <div style="display:flex;justify-content:space-between;align-items:end;margin-top:26px;position:relative;z-index:1"><div style="font-weight:850">Data de emissão<br><span id="certDate"></span></div><div style="text-align:center;min-width:300px"><div class="script">Mariana BS</div><div class="role">Mariana BS - Instrutora</div></div></div>
+ </div>
+</section>
+
+<div id="tourOverlay" class="tourOverlay hidden"></div>
+<div id="tourArrow" class="arrow hidden">⬇</div>
+<div id="tourBox" class="tourBox metal hidden"></div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+"use strict";
+var student="", currentView="overview", tourIndex=0, lessonIndex=0, labOK=false;
+var completed={};
+var events=[
+ {time:"08:41",sev:"critical",source:"EDR",entity:"WS-2044",title:"PowerShell encoded command",tech:"T1059.001",raw:"WINWORD.EXE spawned powershell.exe -enc JAB..."},
+ {time:"08:43",sev:"critical",source:"EDR",entity:"WS-2044",title:"LSASS memory access",tech:"T1003",raw:"Suspicious handle request to lsass.exe"},
+ {time:"08:44",sev:"high",source:"ITDR",entity:"m.santos",title:"Impossible travel + OAuth consent",tech:"T1098",raw:"New app consent from unusual location"},
+ {time:"08:46",sev:"high",source:"NDR",entity:"FIN-SRV-02",title:"DNS beaconing",tech:"T1071.004",raw:"Query evil-sync-update[.]com every 64 seconds"},
+ {time:"08:49",sev:"medium",source:"Cloud",entity:"AWS-S3-FIN",title:"Anomalous object read",tech:"T1530",raw:"Large download volume by risky identity"},
+ {time:"08:52",sev:"high",source:"Email",entity:"Campaign BS-PH-882",title:"Phishing attachment detonated",tech:"T1566.001",raw:"invoice.iso delivered to finance group"}
+];
+var assets=[
+ ["WS-2044","Windows 11","Financeiro","Online","EDR 7.18","Alto"],
+ ["SRV-AD-01","Windows Server","Identidade","Online","EDR 7.18","Crítico"],
+ ["FIN-SRV-02","Ubuntu","Financeiro","Online","NDR Sensor","Alto"],
+ ["CEO-NB-01","macOS","Executivo","Offline 18m","EDR 7.17","Alto"],
+ ["K8S-NODE-07","Kubernetes","Cloud","Online","CWPP 3.2","Médio"]
+];
+var playbooks=[
+ {name:"Credential Access Containment",steps:["Validar alerta e ativo crítico","Isolar endpoint no EDR","Coletar árvore de processos e artefatos","Revogar sessões do usuário","Bloquear hash/domínio","Criar caso IR com evidências"],done:[]},
+ {name:"Phishing Campaign Response",steps:["Localizar campanha","Quarentenar mensagens","Bloquear URL e anexo","Buscar execuções no EDR","Notificar usuários afetados"],done:[]},
+ {name:"Cloud Key Abuse Response",steps:["Desabilitar chave","Validar escopo no CloudTrail","Revisar permissões","Rotacionar segredo","Abrir tarefa de remediação"],done:[]}
+];
+var guide=[
+ {target:"tourBtn",title:"Tour guiado",text:"Este botão inicia o passo a passo da plataforma. A seta vermelha mostra onde olhar e o que fazer."},
+ {target:"sideNav",title:"Menu operacional",text:"Cada item representa um domínio real de XDR: EDR, SIEM, SOAR, ITDR, Cloud, NDR, Email e Exposure."},
+ {target:"content",title:"Área de trabalho",text:"Aqui aparecem tabelas, gráficos, SIEM funcional, SOAR executável e o curso guiado."},
+ {target:"rightPanel",title:"Resposta rápida",text:"Ações de contenção ficam aqui: isolar host, bloquear hash, revogar sessão e escalar caso."}
+];
+var lessons=[
+ {title:"Overview e postura operacional",area:"XDR",text:"O overview mostra risco, alertas, telemetria, cobertura e eficiência operacional. Uma plataforma madura não mostra só contadores: ela prioriza por criticidade, ativo, impacto e contexto.",task:"Qual alerta você prioriza primeiro?",choices:["Servidor financeiro com credential dumping crítico","Alerta médio antigo em máquina de laboratório","Evento informativo de login normal"],ok:0},
+ {title:"EDR Telemetry",area:"EDR",text:"EDR coleta processo, linha de comando, usuário, hash, rede, arquivo, registro e árvore de execução. É a base para entender o que aconteceu no endpoint.",task:"WINWORD abriu PowerShell ofuscado. O que olhar?",choices:["Árvore de processo, comando, usuário, hash e conexão","Apenas o nome PowerShell","A cor do papel de parede"],ok:0},
+ {title:"Threat Graph",area:"XDR",text:"Threat Graph conecta host, usuário, processo, domínio, cloud, e-mail e caso. Ele transforma alertas soltos em história investigável.",task:"Phishing + OAuth suspeito + S3 anômalo indicam:",choices:["Possível comprometimento de identidade com impacto cloud","Evento isolado de impressora","Backup normal"],ok:0},
+ {title:"SIEM funcional",area:"SIEM",text:"SIEM normaliza logs e permite buscar por fonte, severidade, entidade, técnica e tempo. No console, use as consultas rápidas ou digite uma query.",task:"Como validar escopo de WS-2044?",choices:["Consultar SIEM por entidade, técnica e janela temporal","Aguardar outro alerta","Apagar logs"],ok:0},
+ {title:"SOAR funcional",area:"SOAR",text:"SOAR executa playbooks de resposta. O importante é ter ordem, evidência e log. Automação sem governança vira caos rápido.",task:"Para credential dumping confirmado:",choices:["Isolar host, coletar evidências, revogar sessão e abrir caso","Formatar sem coletar evidência","Ignorar até virar ransomware"],ok:0},
+ {title:"ITDR, Cloud, NDR e Email",area:"XDR+",text:"XDR moderno precisa cobrir identidade, cloud, rede e e-mail. Ataques atuais atravessam domínios, então a investigação também precisa atravessar.",task:"Qual visão é mais madura?",choices:["Endpoint + identidade + cloud + rede + e-mail correlacionados","Somente antivírus no endpoint","Somente firewall"],ok:0}
+];
+
+function $(id){return document.getElementById(id)}
+function toast(msg){var t=$("toast");t.textContent=msg;t.classList.remove("hidden");setTimeout(function(){t.classList.add("hidden")},2400)}
+function start(){var n=$("studentName").value.trim(); if(!n){toast("Digite o nome do aluno primeiro.");return} student=n; $("who").textContent=n; $("login").classList.add("hidden"); $("app").classList.remove("hidden"); render("overview")}
+function render(view){currentView=view; completed[view]=true; var titles={
+ overview:["Security Operations Overview","Resumo em tempo real de risco, telemetria e resposta."],
+ detections:["Detections Workbench","Alertas normalizados com fonte, técnica, entidade e evidência."],
+ assets:["Endpoint Inventory","Inventário de agentes, sistemas, grupos, status e criticidade."],
+ graph:["Threat Graph","Grafo de ameaça conectando EDR, ITDR, Cloud, NDR e Email."],
+ siem:["SIEM Search","Consulta funcional em eventos normalizados com filtro e estatísticas."],
+ soar:["SOAR Playbooks","Playbooks executáveis passo a passo com log operacional."],
+ itdr:["ITDR","Detecção e resposta a ameaças de identidade."],
+ cloud:["Cloud Security","CSPM, CWPP, containers, chaves e audit trail."],
+ ndr:["NDR","DNS, NetFlow, beaconing e movimento lateral."],
+ email:["Email Security","Campanhas de phishing, anexos, URL e mailbox telemetry."],
+ exposure:["Exposure Management","Risco por vulnerabilidade, ativo crítico e caminho de ataque."],
+ cases:["Case Management","Gestão de incidentes, responsáveis, status e evidências."],
+ academy:["Curso Guiado","Aprendizado guiado por feature, com explicações e mini-desafios."]
+ }; $("title").textContent=titles[view][0]; $("desc").textContent=titles[view][1];
+ document.querySelectorAll(".nav").forEach(function(n){n.classList.toggle("active",n.dataset.view===view)});
+ var html="";
+ if(view==="overview") html=overview();
+ if(view==="detections") html=detections();
+ if(view==="assets") html=table(["Host","SO","Grupo","Status","Sensor","Risco"],assets);
+ if(view==="graph") html=graph();
+ if(view==="siem") html=siem();
+ if(view==="soar") html=soar();
+ if(view==="itdr") html=simple("ITDR Findings",[["m.santos","Impossible travel + risky OAuth","High","Revogar sessão"],["svc-backup","Caminho até Domain Admin","Critical","Rotacionar segredo"],["admin.temp","Novo privilégio crítico","High","Aprovação obrigatória"]]);
+ if(view==="cloud") html=simple("Cloud Findings",[["AWS S3","Download anômalo","High","Conter chave"],["K8S-NODE-07","Reverse shell em container","Critical","Kill pod"],["Azure","Service principal amplo","High","Revogar consent"]]);
+ if(view==="ndr") html=simple("NDR Findings",[["FIN-SRV-02","DNS beaconing","High","Bloquear domínio"],["WS-2044","SMB lateral burst","High","Segmentar"],["K8S-NODE-07","Rare ASN outbound","Medium","Inspecionar"]]);
+ if(view==="email") html=simple("Email Findings",[["BS-PH-882","Campanha phishing financeiro","High","Quarentenar"],["invoice.iso","Sandbox malicioso","Critical","Bloquear hash"],["CEO-NB-01","User reported phish","Medium","Investigar"]]);
+ if(view==="exposure") html=simple("Exposure Findings",[["CVE crítica","23 ativos afetados","Critical","Priorizar"],["Attack path","Workstation para Domain Admin","High","Quebrar caminho"],["VPN externo","Postura fraca","High","Endurecer"]]);
+ if(view==="cases") html=simple("Cases",[["BS-IR-2044","Credential access endpoint financeiro","Critical","Open"],["BS-CLD-1088","Cloud data access","High","Open"],["BS-ID-7741","Risky OAuth consent","High","Pending"]]);
+ if(view==="academy") html=academy();
+ $("content").innerHTML=html;
+ if(view==="siem"){var q=$("siemQuery"); if(q){q.addEventListener("keydown",function(e){if(e.key==="Enter")runSiem()})}}
+ if(view==="academy"){
+   document.querySelectorAll(".step[data-lesson]").forEach(function(el){el.addEventListener("click",function(){lessonIndex=parseInt(el.dataset.lesson,10);render("academy")})});
+   document.querySelectorAll(".lessonChoice").forEach(function(el){el.addEventListener("click",function(){answerLesson(parseInt(el.dataset.choice,10))})});
+   var pb=$("prevLessonBtn"); if(pb) pb.addEventListener("click",prevLesson);
+   var cb=$("completeLessonBtn"); if(cb) cb.addEventListener("click",completeLesson);
+   var nb=$("nextLessonBtn"); if(nb) nb.addEventListener("click",nextLesson);
+ }
+ updateProgress();
+}
+function sev(s){var v=String(s); if(v==="Critical"||v==="Crítico")return '<span class="badge critical">'+v+'</span>'; if(v==="High"||v==="Alto")return '<span class="badge high">'+v+'</span>'; if(v==="Medium"||v==="Médio")return '<span class="badge medium">'+v+'</span>'; if(v==="Low")return '<span class="badge low">'+v+'</span>'; return v}
+function table(head,rows){return '<div class="panel"><table class="table"><thead><tr>'+head.map(function(h){return "<th>"+h+"</th>"}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return "<tr>"+r.map(function(c){return "<td>"+sev(c)+"</td>"}).join("")+"</tr>"}).join("")+'</tbody></table></div>'}
+function simple(title,rows){return '<div class="panel"><h3>'+title+'</h3>'+table(["Entidade","Achado","Risco","Ação"],rows)+'</div>'}
+function detections(){return '<div class="panel"><h3>Detection Queue</h3><table class="table"><thead><tr><th>Hora</th><th>Sev</th><th>Fonte</th><th>Entidade</th><th>Alerta</th><th>MITRE</th><th>Ação</th></tr></thead><tbody>'+events.map(function(e,i){return '<tr><td class="mono">'+e.time+'</td><td><span class="badge '+e.sev+'">'+e.sev+'</span></td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td><td><button class="btn primary" onclick="investigate('+i+')">Investigar</button></td></tr>'}).join("")+'</tbody></table></div>'}
+function overview(){return '<div class="kpis"><div class="kpi"><small>Endpoints</small><b>4.218</b></div><div class="kpi"><small>Cloud</small><b>612</b></div><div class="kpi"><small>Alertas</small><b id="alertCount">'+events.length+'</b></div><div class="kpi"><small>Logs/dia</small><b>8.7TB</b></div><div class="kpi"><small>Auto Response</small><b>74%</b></div></div><div class="grid2"><div class="panel"><h3>Attack Story</h3>'+events.map(function(e){return '<div class="playStep"><div><b>'+e.time+' • '+e.title+'</b><br><span style="color:#5e6876">'+e.source+' • '+e.entity+' • '+e.tech+'</span></div><span class="badge '+e.sev+'">'+e.sev+'</span></div>'}).join("")+'</div><div class="panel"><h3>Capabilities de uma plataforma madura</h3><div class="grid2">'+["EDR telemetry e response","XDR threat graph","SIEM search e correlation","SOAR playbooks","ITDR identity risk","Cloud CNAPP/CWPP/CSPM","NDR DNS/NetFlow","Email campaign view","Exposure management","Case management"].map(function(x){return '<div class="feat"><b>'+x+'</b><span>Funcionalidade presente no console demonstrativo.</span></div>'}).join("")+'</div></div></div>'}
+function graph(){return '<div class="grid2"><div class="graph"><svg viewBox="0 0 760 470" width="100%" height="445">'+
+line(380,55,170,145,1)+line(380,55,380,150,1)+line(380,55,590,145,0)+line(170,145,120,285,0)+line(380,150,250,285,1)+line(380,150,505,285,0)+line(590,145,640,285,0)+line(250,285,380,390,1)+line(505,285,380,390,0)+
+node(380,55,"WS-2044","Endpoint","critical")+node(170,145,"m.santos","ITDR","high")+node(380,150,"powershell.exe","Process","critical")+node(590,145,"evil domain","NDR","high")+node(120,285,"OAuth consent","Identity","medium")+node(250,285,"lsass.exe","Credential","critical")+node(505,285,"S3 anomaly","Cloud","medium")+node(640,285,"phishing","Email","high")+node(380,390,"SOAR playbook","Containment","low")+
+'</svg></div><div class="panel"><h3>Explicação do Threat Graph</h3><p>O grafo conecta sinais que normalmente ficariam separados: endpoint, identidade, rede, cloud e e-mail. Ele mostra caminho crítico, relação entre entidades e ação recomendada.</p><button class="btn primary" onclick="runAction(\'Threat Graph validado e caso correlacionado\')">Validar correlação</button><div class="panel"><h3>Live Feed</h3><div id="liveFeed" class="mono" style="font-size:12px;line-height:1.7"></div></div></div></div>'}
+function line(x1,y1,x2,y2,hot){return '<line class="'+(hot?'hotlink':'link')+'" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'"/>'}
+function node(x,y,t,s,type){var fill={critical:"#ffe1e6",high:"#ffedc9",medium:"#e5edff",low:"#dff6ed"}[type];var fg={critical:"#8f1727",high:"#7a4a00",medium:"#234985",low:"#0b6c49"}[type];return '<g><rect x="'+(x-66)+'" y="'+(y-29)+'" width="132" height="58" rx="20" fill="'+fill+'"/><text x="'+x+'" y="'+(y-4)+'" fill="'+fg+'" text-anchor="middle" font-size="13" font-weight="900">'+t+'</text><text x="'+x+'" y="'+(y+15)+'" fill="'+fg+'" text-anchor="middle" font-size="10" font-weight="700">'+s+'</text></g>'}
+function siem(){return '<div class="grid2"><div class="term"><b>SIEM Query Console</b><pre id="siemOut">Exemplos:\\nsource=EDR severity=critical\\nentity=WS-2044\\ntech=T1003\\nsource=Cloud OR source=ITDR</pre><input id="siemQuery" placeholder="Digite a consulta SIEM e pressione Enter"/></div><div class="panel"><h3>Resultados filtráveis</h3><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="btn silver" onclick="quickQuery(\'source=EDR\')">EDR</button><button class="btn silver" onclick="quickQuery(\'severity=critical\')">Critical</button><button class="btn silver" onclick="quickQuery(\'entity=WS-2044\')">WS-2044</button><button class="btn silver" onclick="quickQuery(\'source=Cloud OR source=ITDR\')">Cloud/ITDR</button></div><div id="siemTable">'+siemTable(events)+'</div></div></div>'}
+function siemTable(rows){return '<table class="table"><thead><tr><th>Hora</th><th>Fonte</th><th>Entidade</th><th>Evento</th><th>Técnica</th></tr></thead><tbody>'+rows.map(function(e){return '<tr><td class="mono">'+e.time+'</td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td></tr>'}).join("")+'</tbody></table>'}
+function quickQuery(q){$("siemQuery").value=q;runSiem()}
+function runSiem(){var q=$("siemQuery").value.trim();var rows=events.slice();var l=q.toLowerCase();if(l.includes("source=edr"))rows=rows.filter(function(e){return e.source==="EDR"});if(l.includes("source=cloud"))rows=rows.filter(function(e){return e.source==="Cloud"||(l.includes("or")&&e.source==="ITDR")});if(l.includes("source=itdr"))rows=rows.filter(function(e){return e.source==="ITDR"||(l.includes("or")&&e.source==="Cloud")});if(l.includes("severity=critical"))rows=rows.filter(function(e){return e.sev==="critical"});if(l.includes("entity=ws-2044"))rows=rows.filter(function(e){return e.entity==="WS-2044"});if(l.includes("tech=t1003"))rows=rows.filter(function(e){return e.tech==="T1003"});$("siemTable").innerHTML=siemTable(rows);$("siemOut").textContent='SIEM> '+q+'\\n\\nhits: '+rows.length+'\\nfontes: '+Array.from(new Set(rows.map(function(e){return e.source}))).join(", ")+'\\nentidades: '+Array.from(new Set(rows.map(function(e){return e.entity}))).join(", ")+'\\nrecomendação: correlacionar no Threat Graph e abrir playbook SOAR.';completed.siemQuery=true;updateProgress()}
+function soar(){return '<div class="grid3">'+playbooks.map(function(p,pi){return '<div class="panel"><h3>'+p.name+'</h3><p>Execute as etapas em ordem para simular um playbook real.</p>'+p.steps.map(function(s,si){var done=p.done.indexOf(si)>=0;return '<div class="playStep '+(done?'done':'')+'"><span>'+s+'</span><button class="btn '+(done?'good':'primary')+'" onclick="execPlay('+pi+','+si+')">'+(done?'Feito':'Executar')+'</button></div>'}).join("")+'</div>'}).join("")+'</div>'}
+function execPlay(pi,si){var p=playbooks[pi];if(si>0&&p.done.indexOf(si-1)<0){toast("Execute em ordem. Playbook bom não é samba do SOC doido.");return}if(p.done.indexOf(si)<0)p.done.push(si);runAction("SOAR: "+p.name+" → "+p.steps[si]);completed.soarAction=true;render("soar")}
+function academy(){
+ var l=lessons[lessonIndex];
+ var steps=lessons.map(function(x,i){
+   var cls='step '+(i===lessonIndex?'active ':'')+(completed['lesson'+i]?'done':'');
+   return '<div class="'+cls+'" data-lesson="'+i+'"><b>'+(i+1)+'. '+x.area+'</b><span>'+x.title+'</span></div>';
+ }).join('');
+ var choices=l.choices.map(function(c,i){return '<button class="btn silver lessonChoice" data-choice="'+i+'">'+c+'</button>';}).join('');
+ return '<div class="courseLayout"><div class="panel"><h3>Roteiro do curso</h3>'+steps+'</div><div class="lesson"><span class="badge medium">'+l.area+'</span><h3>'+l.title+'</h3><p>'+l.text+'</p><div class="callout"><b>Como usar na plataforma:</b> navegue pelas telas correspondentes, execute uma consulta SIEM, rode um playbook SOAR e observe o Threat Graph para entender a cadeia completa.</div><h3>Mini-desafio</h3><p>'+l.task+'</p><div class="choice">'+choices+'</div><div style="display:flex;justify-content:space-between;gap:10px;margin-top:14px"><button class="btn silver" id="prevLessonBtn">Voltar</button><button class="btn primary" id="completeLessonBtn">Marcar como concluído</button><button class="btn silver" id="nextLessonBtn">Próximo</button></div></div></div>'
+}
+function answerLesson(i){var l=lessons[lessonIndex];if(i===l.ok){completed["lesson"+lessonIndex]=true;if(lessonIndex===lessons.length-1){labOK=true;completed.lab=true}toast("Correto. Boa decisão operacional.");}else{toast("Não é a melhor resposta. Pense em contexto, evidência, escopo e contenção.")}updateProgress();render("academy")}
+function completeLesson(){completed["lesson"+lessonIndex]=true;if(lessonIndex<lessons.length-1)lessonIndex++;updateProgress();render("academy")}
+function nextLesson(){if(lessonIndex<lessons.length-1)lessonIndex++;render("academy")}
+function prevLesson(){if(lessonIndex>0)lessonIndex--;render("academy")}
+function investigate(i){completed.investigation=true;var e=events[i];toast("Investigação aberta: "+e.title);render("graph")}
+function runAction(msg){var log=$("actionLog");var time=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});log.innerHTML="["+time+"] "+msg+"<br>"+log.innerHTML;completed.action=true;updateProgress();toast(msg)}
+function updateProgress(){var score=0,total=24;["overview","detections","assets","graph","siem","soar","itdr","cloud","ndr","email","exposure","cases","academy"].forEach(function(k){if(completed[k])score++});for(var i=0;i<lessons.length;i++){if(completed["lesson"+i])score++}if(completed.siemQuery)score+=2;if(completed.soarAction)score+=2;if(completed.action)score++;if(labOK)score+=2;var pct=Math.min(100,Math.round(score/total*100));$("progress").style.width=pct+"%";$("progressText").textContent=pct+"%";if(pct>=70&&labOK){$("certBtn").disabled=false;$("certBtn").textContent="Abrir certificado PNG";$("certBtn").className="btn primary"}}
+function simulate(){events.unshift({time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),sev:"critical",source:"EDR",entity:"PAYROLL-09",title:"Ransomware precursor behavior",tech:"T1486",raw:"Mass rename + shadow copy discovery"});toast("Novo incidente em tempo real adicionado.");render(currentView)}
+function tick(){var c=$("clock");if(c)c.textContent=new Date().toLocaleTimeString("pt-BR");var f=$("liveFeed");if(f){var msgs=["[EDR] process event received from WS-2044","[ITDR] m.santos risk score updated","[NDR] DNS beacon confirmed","[Cloud] unusual S3 access correlated","[SOAR] containment playbook ready"];f.innerHTML="["+new Date().toLocaleTimeString("pt-BR")+"] "+msgs[Math.floor(Math.random()*msgs.length)]+"<br>"+f.innerHTML;f.innerHTML=f.innerHTML.split("<br>").slice(0,8).join("<br>")}}
+function openTour(){tourIndex=0;showTour()}
+function showTour(){clearHighlight();var g=guide[tourIndex];var el=$(g.target);if(!el)return;el.classList.add("highlight");var r=el.getBoundingClientRect();$("tourOverlay").classList.remove("hidden");$("tourArrow").classList.remove("hidden");$("tourBox").classList.remove("hidden");$("tourArrow").style.left=Math.min(r.left+30,window.innerWidth-90)+"px";$("tourArrow").style.top=Math.max(10,r.top-80)+"px";$("tourBox").style.left=Math.min(Math.max(15,r.left+20),window.innerWidth-550)+"px";$("tourBox").style.top=Math.min(r.bottom+18,window.innerHeight-260)+"px";$("tourBox").innerHTML='<div class="kicker">Tour guiado</div><h3 style="font-size:25px;margin:8px 0">'+g.title+'</h3><p style="line-height:1.5;color:#4d5664">'+g.text+'</p><div style="display:flex;justify-content:space-between;gap:10px"><button class="btn silver" onclick="closeTour()">Fechar</button><button class="btn primary" onclick="nextTour()">'+(tourIndex===guide.length-1?'Concluir':'Próximo')+'</button></div>'}
+function nextTour(){if(tourIndex<guide.length-1){tourIndex++;showTour()}else{closeTour();completed.tour=true;toast("Tour concluído. Agora entre no Curso Guiado.")}}
+function clearHighlight(){document.querySelectorAll(".highlight").forEach(function(e){e.classList.remove("highlight")})}
+function closeTour(){clearHighlight();$("tourOverlay").classList.add("hidden");$("tourArrow").classList.add("hidden");$("tourBox").classList.add("hidden")}
+function showCert(){$("app").classList.add("hidden");$("certScreen").classList.remove("hidden");$("certName").textContent=student;$("certDate").textContent=new Date().toLocaleDateString("pt-BR")}
+function back(){$("certScreen").classList.add("hidden");$("app").classList.remove("hidden")}
+async function downloadCert(){var cert=$("certificate");var canvas=await html2canvas(cert,{scale:2,backgroundColor:null,useCORS:true,width:cert.offsetWidth,height:cert.offsetHeight});var a=document.createElement("a");a.download="certificado_be_safe_xdr.png";a.href=canvas.toDataURL("image/png");a.click()}
+document.addEventListener("DOMContentLoaded",function(){
+ $("enterBtn").addEventListener("click",start);$("demoBtn").addEventListener("click",function(){$("studentName").value="Analista Be Safe"});$("studentName").addEventListener("keydown",function(e){if(e.key==="Enter")start()});
+ document.querySelectorAll(".nav").forEach(function(n){n.addEventListener("click",function(){render(n.dataset.view)})});
+ document.querySelectorAll(".quick").forEach(function(b){b.addEventListener("click",function(){runAction(b.dataset.action)})});
+ $("tourBtn").addEventListener("click",openTour);$("simBtn").addEventListener("click",simulate);$("newRule").addEventListener("click",function(){toast("Rule Builder aberto: regra Sigma-like criada em modo simulado.")});$("certBtn").addEventListener("click",showCert);$("backBtn").addEventListener("click",back);$("downloadCert").addEventListener("click",downloadCert);
+ setInterval(tick,1800);tick();
+});
+</script>
+</body>
+</html>
