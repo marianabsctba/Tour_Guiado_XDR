@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;800&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#121722;--muted:#5e6876;--line:#aeb6c2;--dark:#111820;--gold:#b9944f;--red:#d3152b;--green:#08774d}
+:root{--ink:#121722;--muted:#5e6876;--line:#aeb6c2;--dark:#111820;--gold:#b9944f;--red:#d3152b;--green:#08774d;--purple:#6d4aff;--purple2:#9b7cff;--purpleDark:#33235f}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fafafa,#d9dde4 34%,#aeb6c2 65%,#f2f3f5)}
 button,input,select{font-family:inherit}.hidden{display:none!important}.mono{font-family:"JetBrains Mono",monospace}
-.metal{background:linear-gradient(145deg,#fff,#d7dbe2 28%,#f8f9fa 48%,#abb3bf 76%,#eef0f4);border:1px solid rgba(70,80,96,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 24px 70px rgba(15,20,30,.22)}
+.metal{background:linear-gradient(145deg,#fff,#d7dbe2 25%,#f8f9fa 45%,#c7c2de 62%,#abb3bf 78%,#eef0f4);border:1px solid rgba(70,80,96,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 24px 70px rgba(15,20,30,.22)}
 .btn{border:0;border-radius:12px;padding:11px 14px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.16)}
-.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:#111820;color:white}.silver{background:linear-gradient(145deg,#fff,#cbd1db);border:1px solid #95a0af;color:#111820}.danger{background:#b42335;color:white}.good{background:#08774d;color:white}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:linear-gradient(145deg,#111820,#2a2145 55%,#5b43c6);color:white}.silver{background:linear-gradient(145deg,#fff,#cbd1db);border:1px solid #95a0af;color:#111820}.danger{background:#b42335;color:white}.good{background:#08774d;color:white}
 .badge{display:inline-flex;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.08em}.critical{background:#ffe1e6;color:#97182a}.high{background:#ffedc9;color:#815000}.medium{background:#e5edff;color:#234985}.low{background:#dff6ed;color:#0b6c49}
-.logo{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;font-weight:950;position:relative;overflow:hidden}.logo:before{content:"";position:absolute;inset:8px;border:1px solid rgba(185,148,79,.82);border-radius:16px}.logo:after{content:"";position:absolute;width:100px;height:18px;left:-35px;top:10px;background:rgba(255,255,255,.55);transform:rotate(-35deg)}.mark{position:relative;z-index:1;text-align:center;line-height:.9}.mark b{font-size:22px}.mark span{display:block;margin-top:5px;font-size:8px;letter-spacing:.22em;color:#5f6875}
+.logo{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;font-weight:950;position:relative;overflow:hidden}.logo:before{content:"";position:absolute;inset:8px;border:1px solid rgba(155,124,255,.85);border-radius:16px;box-shadow:0 0 18px rgba(109,74,255,.18)}.logo:after{content:"";position:absolute;width:100px;height:18px;left:-35px;top:10px;background:rgba(255,255,255,.55);transform:rotate(-35deg)}.mark{position:relative;z-index:1;text-align:center;line-height:.9}.mark b{font-size:22px}.mark span{display:block;margin-top:5px;font-size:8px;letter-spacing:.22em;color:#5f6875}
 .login{max-width:1220px;margin:0 auto;padding:34px 22px}.brand{display:flex;gap:14px;align-items:center;margin-bottom:22px}.brand h1{margin:0;font-size:28px}.brand p{margin:4px 0 0;color:var(--muted);font-weight:700}
 .hero{border-radius:34px;padding:34px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px}.hero h2{font-size:54px;line-height:1;margin:12px 0;letter-spacing:-2.2px}.hero p{font-size:18px;line-height:1.55;color:#3f4856}.kicker{text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:950;color:#606a78}
 .form{border-radius:24px;background:rgba(255,255,255,.58);border:1px solid rgba(0,0,0,.12);padding:20px}.form label{display:block;font-weight:950;margin:12px 0 7px}.form input,.form select{width:100%;border:1px solid #98a2b2;border-radius:14px;padding:13px 14px;font-weight:800;font-size:16px;background:white}
@@ -34,6 +34,85 @@ button,input,select{font-family:inherit}.hidden{display:none!important}.mono{fon
 .certScreen{max-width:1180px;margin:0 auto;padding:32px 20px}.certificate{width:1060px;height:780px;position:relative;overflow:hidden;border-radius:28px;padding:54px 70px;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.9),transparent 35%),linear-gradient(135deg,#fff,#d8dce2 32%,#fff 50%,#a8b0bc 100%);border:12px solid #151922;outline:5px solid var(--gold)}.certificate:before{content:"";position:absolute;inset:29px;border:2px solid rgba(185,148,79,.76);border-radius:18px}.certTitle{text-align:center;font-family:"Playfair Display",serif;font-size:54px;margin:38px 0 6px}.certSub{text-align:center;text-transform:uppercase;letter-spacing:.24em;color:#5e6875;font-weight:950;font-size:13px}.certName{text-align:center;font-family:"Playfair Display",serif;font-size:44px;font-weight:800;border-bottom:2px solid var(--gold);max-width:800px;margin:28px auto 10px;padding-bottom:8px}.certText{text-align:center;line-height:1.6;font-size:17px;max-width:860px;margin:0 auto}.learned{max-width:860px;margin:20px auto 0;padding:14px 18px;border-radius:20px;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.12);line-height:1.5}.script{font-family:"Great Vibes",cursive;font-size:42px}.role{border-top:1px solid #111820;margin-top:8px;padding-top:8px;font-weight:850}
 @media(max-width:1200px){.app{grid-template-columns:1fr}.side,.right{position:relative;height:auto}.kpis{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.courseLayout,.grid2{grid-template-columns:1fr}.certificate{transform:scale(.72);transform-origin:top left}.certScreen{height:680px;overflow:auto}}
 @media(max-width:720px){.hero h2{font-size:38px}.featuregrid,.grid3,.kpis{grid-template-columns:1fr}.certificate{transform:scale(.45)}.certScreen{height:470px}}
+
+.main:before,.right:before,.side:before{
+  content:"";
+  display:block;
+  height:4px;
+  border-radius:999px;
+  margin:0 0 12px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--purple2),transparent);
+  opacity:.85;
+}
+.nav.active{box-shadow:inset 4px 0 0 var(--purple),0 10px 22px rgba(61,45,130,.12)}
+.kpi{position:relative;overflow:hidden}
+.kpi:after{content:"";position:absolute;right:-22px;top:-22px;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,rgba(109,74,255,.22),transparent 68%)}
+.panel h3:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:linear-gradient(145deg,var(--purple2),var(--purple));margin-right:8px;box-shadow:0 0 12px rgba(109,74,255,.5)}
+.tableWrap{width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+.table{min-width:720px}
+.mobileTop{
+  display:none;
+  border-radius:22px;
+  padding:12px;
+  margin:14px;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.mobileTop b{font-size:15px}
+.mobileTop button{white-space:nowrap}
+@media(max-width:1200px){
+  .app{grid-template-columns:1fr}
+  .side,.right{position:relative;height:auto}
+  .side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .side .brand,.side #tourBtn,.side .navTitle{grid-column:1/-1}
+  .nav{margin-bottom:0}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .hero{grid-template-columns:1fr}
+  .courseLayout,.grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:repeat(2,1fr)}
+  .certificate{transform:scale(.72);transform-origin:top left}
+  .certScreen{height:680px;overflow:auto}
+}
+@media(max-width:760px){
+  body{background:linear-gradient(135deg,#f8f8fa,#d6d9e2 48%,#c6bfdc)}
+  .login{padding:18px 12px}
+  .brand{align-items:flex-start}
+  .brand h1{font-size:21px}
+  .brand p{font-size:13px}
+  .hero{padding:20px;border-radius:24px}
+  .hero h2{font-size:34px;letter-spacing:-1.3px}
+  .hero p{font-size:15px}
+  .featuregrid,.grid3,.kpis{grid-template-columns:1fr}
+  .app{padding:10px;gap:10px}
+  .side,.main,.right{border-radius:22px;padding:11px}
+  .side{grid-template-columns:1fr;max-height:none}
+  .top{flex-direction:column}
+  .top h2{font-size:25px}
+  .top > div:last-child{width:100%;display:grid!important;grid-template-columns:1fr 1fr}
+  .btn{width:auto;min-height:42px}
+  .table th,.table td{font-size:12px;padding:10px 8px}
+  .graph{min-height:360px;padding:10px;overflow:auto}
+  .graph svg{min-width:680px}
+  .courseLayout{grid-template-columns:1fr}
+  .lesson{min-height:auto;padding:15px}
+  .lesson h3{font-size:23px}
+  .playStep{align-items:flex-start;flex-direction:column}
+  .playStep .btn{width:100%}
+  .certificate{transform:scale(.45)}
+  .certScreen{height:470px}
+  .tourBox{left:12px!important;right:12px!important;width:auto!important;top:auto!important;bottom:18px!important}
+  .arrow{font-size:56px}
+}
+@media(max-width:430px){
+  .hero h2{font-size:29px}
+  .logo{width:54px;height:54px;border-radius:18px}
+  .mark b{font-size:18px}
+  .kpi b{font-size:23px}
+  .top > div:last-child{grid-template-columns:1fr}
+  .table{min-width:680px}
+}
+
 </style>
 </head>
 <body>
@@ -82,7 +161,7 @@ button,input,select{font-family:inherit}.hidden{display:none!important}.mono{fon
  </aside>
  <main class="main metal">
   <div class="top">
-   <div><h2 id="title"></h2><p id="desc"></p><p class="live"><span class="dot"></span> Real-time telemetry ativo • <span id="clock"></span></p></div>
+   <div><h2 id="title"></h2><p id="desc"></p><p class="live"><span class="dot"></span> <span style="color:var(--purple)">Real-time telemetry</span> ativo • <span id="clock"></span></p></div>
    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn silver" id="newRule">Nova regra</button><button class="btn primary" id="simBtn">Simular incidente</button></div>
   </div>
   <div id="content"></div>
@@ -195,9 +274,9 @@ function render(view){currentView=view; completed[view]=true; var titles={
  updateProgress();
 }
 function sev(s){var v=String(s); if(v==="Critical"||v==="Crítico")return '<span class="badge critical">'+v+'</span>'; if(v==="High"||v==="Alto")return '<span class="badge high">'+v+'</span>'; if(v==="Medium"||v==="Médio")return '<span class="badge medium">'+v+'</span>'; if(v==="Low")return '<span class="badge low">'+v+'</span>'; return v}
-function table(head,rows){return '<div class="panel"><table class="table"><thead><tr>'+head.map(function(h){return "<th>"+h+"</th>"}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return "<tr>"+r.map(function(c){return "<td>"+sev(c)+"</td>"}).join("")+"</tr>"}).join("")+'</tbody></table></div>'}
+function table(head,rows){return '<div class="panel"><div class="tableWrap"><table class="table"><thead><tr>'+head.map(function(h){return "<th>"+h+"</th>"}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return "<tr>"+r.map(function(c){return "<td>"+sev(c)+"</td>"}).join("")+"</tr>"}).join("")+'</tbody></table></div></div>'}
 function simple(title,rows){return '<div class="panel"><h3>'+title+'</h3>'+table(["Entidade","Achado","Risco","Ação"],rows)+'</div>'}
-function detections(){return '<div class="panel"><h3>Detection Queue</h3><table class="table"><thead><tr><th>Hora</th><th>Sev</th><th>Fonte</th><th>Entidade</th><th>Alerta</th><th>MITRE</th><th>Ação</th></tr></thead><tbody>'+events.map(function(e,i){return '<tr><td class="mono">'+e.time+'</td><td><span class="badge '+e.sev+'">'+e.sev+'</span></td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td><td><button class="btn primary" onclick="investigate('+i+')">Investigar</button></td></tr>'}).join("")+'</tbody></table></div>'}
+function detections(){return '<div class="panel"><h3>Detection Queue</h3><div class="tableWrap"><table class="table"><thead><tr><th>Hora</th><th>Sev</th><th>Fonte</th><th>Entidade</th><th>Alerta</th><th>MITRE</th><th>Ação</th></tr></thead><tbody>'+events.map(function(e,i){return '<tr><td class="mono">'+e.time+'</td><td><span class="badge '+e.sev+'">'+e.sev+'</span></td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td><td><button class="btn primary" onclick="investigate('+i+')">Investigar</button></td></tr>'}).join("")+'</tbody></table></div></div>'}
 function overview(){return '<div class="kpis"><div class="kpi"><small>Endpoints</small><b>4.218</b></div><div class="kpi"><small>Cloud</small><b>612</b></div><div class="kpi"><small>Alertas</small><b id="alertCount">'+events.length+'</b></div><div class="kpi"><small>Logs/dia</small><b>8.7TB</b></div><div class="kpi"><small>Auto Response</small><b>74%</b></div></div><div class="grid2"><div class="panel"><h3>Attack Story</h3>'+events.map(function(e){return '<div class="playStep"><div><b>'+e.time+' • '+e.title+'</b><br><span style="color:#5e6876">'+e.source+' • '+e.entity+' • '+e.tech+'</span></div><span class="badge '+e.sev+'">'+e.sev+'</span></div>'}).join("")+'</div><div class="panel"><h3>Capabilities de uma plataforma madura</h3><div class="grid2">'+["EDR telemetry e response","XDR threat graph","SIEM search e correlation","SOAR playbooks","ITDR identity risk","Cloud CNAPP/CWPP/CSPM","NDR DNS/NetFlow","Email campaign view","Exposure management","Case management"].map(function(x){return '<div class="feat"><b>'+x+'</b><span>Funcionalidade presente no console demonstrativo.</span></div>'}).join("")+'</div></div></div>'}
 function graph(){return '<div class="grid2"><div class="graph"><svg viewBox="0 0 760 470" width="100%" height="445">'+
 line(380,55,170,145,1)+line(380,55,380,150,1)+line(380,55,590,145,0)+line(170,145,120,285,0)+line(380,150,250,285,1)+line(380,150,505,285,0)+line(590,145,640,285,0)+line(250,285,380,390,1)+line(505,285,380,390,0)+
@@ -206,7 +285,7 @@ node(380,55,"WS-2044","Endpoint","critical")+node(170,145,"m.santos","ITDR","hig
 function line(x1,y1,x2,y2,hot){return '<line class="'+(hot?'hotlink':'link')+'" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'"/>'}
 function node(x,y,t,s,type){var fill={critical:"#ffe1e6",high:"#ffedc9",medium:"#e5edff",low:"#dff6ed"}[type];var fg={critical:"#8f1727",high:"#7a4a00",medium:"#234985",low:"#0b6c49"}[type];return '<g><rect x="'+(x-66)+'" y="'+(y-29)+'" width="132" height="58" rx="20" fill="'+fill+'"/><text x="'+x+'" y="'+(y-4)+'" fill="'+fg+'" text-anchor="middle" font-size="13" font-weight="900">'+t+'</text><text x="'+x+'" y="'+(y+15)+'" fill="'+fg+'" text-anchor="middle" font-size="10" font-weight="700">'+s+'</text></g>'}
 function siem(){return '<div class="grid2"><div class="term"><b>SIEM Query Console</b><pre id="siemOut">Exemplos:\\nsource=EDR severity=critical\\nentity=WS-2044\\ntech=T1003\\nsource=Cloud OR source=ITDR</pre><input id="siemQuery" placeholder="Digite a consulta SIEM e pressione Enter"/></div><div class="panel"><h3>Resultados filtráveis</h3><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="btn silver" onclick="quickQuery(\'source=EDR\')">EDR</button><button class="btn silver" onclick="quickQuery(\'severity=critical\')">Critical</button><button class="btn silver" onclick="quickQuery(\'entity=WS-2044\')">WS-2044</button><button class="btn silver" onclick="quickQuery(\'source=Cloud OR source=ITDR\')">Cloud/ITDR</button></div><div id="siemTable">'+siemTable(events)+'</div></div></div>'}
-function siemTable(rows){return '<table class="table"><thead><tr><th>Hora</th><th>Fonte</th><th>Entidade</th><th>Evento</th><th>Técnica</th></tr></thead><tbody>'+rows.map(function(e){return '<tr><td class="mono">'+e.time+'</td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td></tr>'}).join("")+'</tbody></table>'}
+function siemTable(rows){return '<div class="tableWrap"><table class="table"><thead><tr><th>Hora</th><th>Fonte</th><th>Entidade</th><th>Evento</th><th>Técnica</th></tr></thead><tbody>'+rows.map(function(e){return '<tr><td class="mono">'+e.time+'</td><td>'+e.source+'</td><td>'+e.entity+'</td><td>'+e.title+'</td><td>'+e.tech+'</td></tr>'}).join("")+'</tbody></table></div>'}
 function quickQuery(q){$("siemQuery").value=q;runSiem()}
 function runSiem(){var q=$("siemQuery").value.trim();var rows=events.slice();var l=q.toLowerCase();if(l.includes("source=edr"))rows=rows.filter(function(e){return e.source==="EDR"});if(l.includes("source=cloud"))rows=rows.filter(function(e){return e.source==="Cloud"||(l.includes("or")&&e.source==="ITDR")});if(l.includes("source=itdr"))rows=rows.filter(function(e){return e.source==="ITDR"||(l.includes("or")&&e.source==="Cloud")});if(l.includes("severity=critical"))rows=rows.filter(function(e){return e.sev==="critical"});if(l.includes("entity=ws-2044"))rows=rows.filter(function(e){return e.entity==="WS-2044"});if(l.includes("tech=t1003"))rows=rows.filter(function(e){return e.tech==="T1003"});$("siemTable").innerHTML=siemTable(rows);$("siemOut").textContent='SIEM> '+q+'\\n\\nhits: '+rows.length+'\\nfontes: '+Array.from(new Set(rows.map(function(e){return e.source}))).join(", ")+'\\nentidades: '+Array.from(new Set(rows.map(function(e){return e.entity}))).join(", ")+'\\nrecomendação: correlacionar no Threat Graph e abrir playbook SOAR.';completed.siemQuery=true;updateProgress()}
 function soar(){return '<div class="grid3">'+playbooks.map(function(p,pi){return '<div class="panel"><h3>'+p.name+'</h3><p>Execute as etapas em ordem para simular um playbook real.</p>'+p.steps.map(function(s,si){var done=p.done.indexOf(si)>=0;return '<div class="playStep '+(done?'done':'')+'"><span>'+s+'</span><button class="btn '+(done?'good':'primary')+'" onclick="execPlay('+pi+','+si+')">'+(done?'Feito':'Executar')+'</button></div>'}).join("")+'</div>'}).join("")+'</div>'}
