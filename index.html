@@ -83,7 +83,7 @@
   <div class="nav" data-view="email" data-perm="view.email"><i></i>Email Security</div>
   <div class="nav" data-view="exposure" data-perm="view.exposure"><i></i>Exposure</div>
   <div class="nav" data-view="cases" data-perm="view.cases"><i></i>Cases</div>
-  <div class="nav" data-view="academy" data-perm="view.academy"><i></i>Curso Guiado</div>
+  <div class="nav" data-view="academy" data-perm="view.academy"><i></i>Tour Guiado</div>
  </aside>
  <main class="main metal">
   <div class="top">
@@ -183,13 +183,236 @@ const playbooks=[
 const SALT='bs-xdr-rbac-2026';
 function xorHex(str,salt){let out='';for(let i=0;i<str.length;i++){out+=(str.charCodeAt(i)^salt.charCodeAt(i%salt.length)).toString(16).padStart(2,'0')}return out}
 const lessons=[
- {title:'RBAC aplicado ao SOC',area:'RBAC',text:'RBAC reduz risco operacional: quem observa não deve conseguir conter; quem responde endpoint não deve administrar política global; quem cria detecção não deve virar administrador sem aprovação.',task:'Um auditor externo precisa validar alertas e evidências sem risco de alterar a operação. Qual perfil é o mais adequado?',choices:['Read-only Viewer, porque preserva visibilidade sem permitir ações de contenção ou configuração.','Endpoint Security Analyst, porque também consegue investigar alertas com ações de resposta no host.','Detection Engineer, porque consegue revisar lógica de detecção e melhorar correlação.','SOC Operations Admin, porque tem visão completa e acesso administrativo à plataforma.'],ok:'0'},
- {title:'Resposta endpoint com governança',area:'EDR',text:'A contenção de endpoint deve ser rápida, mas auditável. Isolamento, kill process, quarentena e bloqueio de hash precisam respeitar escopo, criticidade e autorização.',task:'Há PowerShell ofuscado, acesso ao LSASS e host financeiro crítico. Qual sequência é mais defensável?',choices:['Isolar o host, preservar evidências, validar árvore de processos, bloquear artefatos confirmados e abrir caso com contexto.','Bloquear imediatamente todo PowerShell no ambiente para reduzir superfície de ataque e encerrar o incidente.','Formatar o endpoint afetado para eliminar persistência e reduzir tempo médio de resposta.','Aguardar novos alertas para confirmar recorrência antes de tomar qualquer ação disruptiva.'],ok:'0'},
- {title:'Engenharia de detecção',area:'Detection',text:'Uma boa regra não é só uma query que dispara. Ela precisa combinar sinal, contexto, redução de falso positivo, criticidade e mapeamento MITRE.',task:'Ao criar uma detecção para credential access, qual abordagem é mais madura?',choices:['Combinar acesso ao LSASS, processo pai incomum, usuário, host crítico, frequência e exceções documentadas.','Alertar qualquer execução de PowerShell porque é uma ferramenta muito usada por atacantes.','Usar somente severidade crítica em todos os eventos de autenticação privilegiada.','Criar a regra apenas com IOC fixo, pois hash e domínio são sempre suficientes.'],ok:'0'},
- {title:'Política SOAR',area:'SOAR',text:'Automação boa acelera o SOC, mas automação sem freio pode causar indisponibilidade. Nem toda ação deve ser automática.',task:'Qual política é mais segura para containment de credenciais em ativo crítico?',choices:['Execução assistida com aprovação humana para ações disruptivas e automação direta para enriquecimento/coleta.','Automação total de isolamento, revogação e bloqueio para qualquer alerta de severidade média ou superior.','Somente playbook manual, porque qualquer automação em segurança aumenta risco operacional.','Enviar notificação por e-mail ao gestor e aguardar confirmação antes de coletar evidências.'],ok:'0'},
- {title:'Correlação XDR',area:'XDR',text:'XDR maduro cruza domínios. Phishing, identidade, endpoint, cloud e rede contam uma história quando analisados juntos.',task:'Phishing entregue, OAuth suspeito, PowerShell no endpoint e leitura anômala em S3. Qual leitura é mais correta?',choices:['Possível cadeia multivetor com comprometimento inicial, abuso de identidade, execução em endpoint e impacto cloud.','Incidentes independentes, porque cada fonte pertence a uma tecnologia diferente e exige fila separada.','Evento primariamente de firewall, pois todo tráfego passa pela rede antes de chegar ao endpoint.','Falso positivo provável, já que OAuth e S3 são atividades comuns em ambientes corporativos.'],ok:'0'},
- {title:'Least privilege',area:'Governance',text:'Privilégio mínimo não é burocracia: é contenção de dano. A plataforma deve mostrar limites de ação e registrar tentativas negadas.',task:'Um Detection Engineer tenta editar política global de isolamento automático. O comportamento ideal é:',choices:['Negar a ação, explicar a permissão exigida, registrar auditoria e manter acesso às funções de detecção.','Permitir a alteração porque engenharia de detecção entende melhor a lógica do alerta.','Ocultar totalmente a tela de políticas para que ele não saiba que a função existe.','Permitir edição temporária desde que a política seja revertida ao fim da sessão.'],ok:'0'}
+ {
+  "title": "RBAC aplicado ao SOC",
+  "area": "RBAC",
+  "screen": "RBAC Matrix",
+  "feature": "Controla quem pode ver, configurar, investigar e responder dentro da plataforma.",
+  "purpose": "Evita que perfis de leitura ou engenharia executem ações de alto impacto sem autorização.",
+  "user": "Auditoria, SOC Admin, gestores e analistas que precisam entender seus limites de atuação.",
+  "decision": "Definir se uma ação deve ser permitida, bloqueada ou enviada para aprovação.",
+  "example": "Um Read-only Viewer pode consultar evidências, mas não consegue isolar endpoint nem alterar política.",
+  "text": "RBAC reduz risco operacional: quem observa não deve conseguir conter; quem responde endpoint não deve administrar política global; quem cria detecção não deve virar administrador sem aprovação.",
+  "task": "Um auditor externo precisa validar alertas e evidências sem risco de alterar a operação. Qual perfil é o mais adequado?",
+  "choices": [
+   "Read-only Viewer, porque preserva visibilidade sem permitir ações de contenção ou configuração.",
+   "Endpoint Security Analyst, porque também consegue investigar alertas com ações de resposta no host.",
+   "Detection Engineer, porque consegue revisar lógica de detecção e melhorar correlação.",
+   "SOC Operations Admin, porque tem visão completa e acesso administrativo à plataforma."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Overview operacional e KPIs vivos",
+  "area": "Overview",
+  "screen": "Security Operations Overview",
+  "feature": "Mostra postura geral do ambiente com EPS, ingestão, risco, SLA, MTTD, MTTR, severidades e saúde de sensores.",
+  "purpose": "Ajuda a entender se o SOC está sob controle, sobrecarregado ou diante de uma cadeia de ataque crescente.",
+  "user": "Gestores de SOC, coordenadores, analistas N1/N2 e pré-vendas demonstrando valor operacional.",
+  "decision": "Priorizar filas, justificar escalonamento, explicar risco e acompanhar melhoria ou degradação em tempo real.",
+  "example": "O risco sobe quando um evento de endpoint se correlaciona com identidade e cloud; cai após contenção e aprovação.",
+  "text": "O overview não é só painel bonito: ele precisa traduzir volume, severidade, saúde e tendência em decisão operacional.",
+  "task": "O risco subiu junto com critical alerts, sensor health caiu e EPS aumentou. Qual leitura é mais madura?",
+  "choices": [
+   "Há possível degradação operacional e aumento de risco; devo validar correlação, cobertura de sensores e incidentes críticos antes de responder.",
+   "O aumento de EPS sempre significa ataque confirmado, então devo executar contenção automática em todos os hosts.",
+   "Se o SLA continua alto, posso ignorar alertas críticos até o próximo relatório executivo.",
+   "Sensor health não influencia investigação, porque o SIEM continua recebendo algum volume de log."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Threat Graph e investigação XDR",
+  "area": "Threat Graph",
+  "screen": "Threat Graph",
+  "feature": "Conecta endpoint, identidade, processo, domínio, e-mail, cloud e caso em uma cadeia única de ataque.",
+  "purpose": "Evita análise fragmentada e ajuda o analista a entender causa, caminho, escopo e impacto.",
+  "user": "Analistas N2/N3, incident responders e detection engineers.",
+  "decision": "Definir se eventos aparentemente separados fazem parte do mesmo incidente e qual contenção vem primeiro.",
+  "example": "Phishing entrega documento, Word abre PowerShell, LSASS é acessado, OAuth é abusado e bucket cloud sofre leitura anômala.",
+  "text": "XDR maduro cruza domínios. Phishing, identidade, endpoint, cloud e rede contam uma história quando analisados juntos.",
+  "task": "Phishing entregue, OAuth suspeito, PowerShell no endpoint e leitura anômala em S3. Qual leitura é mais correta?",
+  "choices": [
+   "Possível cadeia multivetor com comprometimento inicial, abuso de identidade, execução em endpoint e impacto cloud.",
+   "Incidentes independentes, porque cada fonte pertence a uma tecnologia diferente e exige fila separada.",
+   "Evento primariamente de firewall, pois todo tráfego passa pela rede antes de chegar ao endpoint.",
+   "Falso positivo provável, já que OAuth e S3 são atividades comuns em ambientes corporativos."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "SIEM Search e Rule Builder",
+  "area": "SIEM",
+  "screen": "SIEM Search",
+  "feature": "Permite buscar eventos normalizados e criar regras de detecção com base em condições técnicas.",
+  "purpose": "Transforma evidência em hipótese testável e transforma hipótese recorrente em detecção permanente.",
+  "user": "Detection Engineers, Threat Hunters e analistas avançados.",
+  "decision": "Validar escopo do incidente, encontrar entidades relacionadas e decidir se uma nova regra deve ser criada.",
+  "example": "Buscar entity=WS-2044 e tech=T1003 para confirmar credential access e depois criar regra para LSASS access anômalo.",
+  "text": "SIEM é a área de pergunta e prova: o analista consulta, filtra, correlaciona e transforma padrões em regra.",
+  "task": "Você encontrou LSASS access em um host financeiro, mas precisa saber se o comportamento se repetiu. Melhor próximo passo?",
+  "choices": [
+   "Consultar SIEM por técnica, processo, entidade e janela temporal; se houver padrão recorrente, propor regra com escopo e exceções.",
+   "Criar regra crítica global imediatamente para qualquer acesso ao LSASS, sem exceções ou baseline.",
+   "Fechar como falso positivo se o primeiro evento não executou ransomware visível.",
+   "Delegar ao firewall, porque credential access sempre aparece primeiro como tráfego de rede."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "SOAR e playbooks de resposta",
+  "area": "SOAR",
+  "screen": "SOAR Playbooks",
+  "feature": "Executa etapas de resposta como isolar host, bloquear hash, revogar sessão, quarentenar e abrir caso.",
+  "purpose": "Padroniza resposta, reduz tempo e registra auditoria sem transformar automação em caos.",
+  "user": "Endpoint Security Analyst, Incident Responder, SOC Admin e alguns Detection Engineers com escopo limitado.",
+  "decision": "Escolher o playbook correto e executar na ordem certa, respeitando aprovações e impacto.",
+  "example": "Credential access confirmado exige validar alerta, isolar host, coletar evidências, revogar sessão e abrir caso IR.",
+  "text": "SOAR bom não é botão mágico. É resposta orientada por evidência, ordem, autorização e registro.",
+  "task": "Há credential dumping confirmado em endpoint financeiro. Qual fluxo é mais defensável?",
+  "choices": [
+   "Validar escopo, isolar endpoint, preservar evidências, revogar sessões relacionadas, bloquear IOC e abrir caso IR.",
+   "Formatar o host imediatamente para eliminar o risco e limpar o alerta da fila.",
+   "Executar todos os playbooks disponíveis para garantir resposta máxima.",
+   "Aguardar o usuário reportar impacto, porque ações de contenção podem atrapalhar a operação."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Policy Engine",
+  "area": "Policies",
+  "screen": "Policy Center",
+  "feature": "Define políticas por domínio, severidade, escopo, modo de aplicação e necessidade de aprovação.",
+  "purpose": "Controla quando a plataforma apenas monitora, quando responde automaticamente e quando exige aprovação humana.",
+  "user": "SOC Operations Admin e responsáveis por governança de segurança.",
+  "decision": "Definir enforcement, approval, monitor ou auto-response conforme risco e criticidade.",
+  "example": "Isolamento automático para ransomware pode exigir aprovação em servidores críticos, mas ser automático em estações comuns.",
+  "text": "Política operacional precisa equilibrar velocidade, segurança, impacto no negócio e rastreabilidade.",
+  "task": "Uma política global de isolamento automático afetaria servidores críticos e workstations. Qual desenho é mais seguro?",
+  "choices": [
+   "Usar escopo por grupo, exceções para ativos críticos e modo approval onde o impacto de negócio é alto.",
+   "Aplicar isolamento automático para todos os ativos sem exceção, porque ransomware exige velocidade.",
+   "Deixar tudo em monitoramento, pois qualquer contenção automática pode gerar indisponibilidade.",
+   "Permitir que cada analista decida manualmente sem política central para aumentar flexibilidade."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Timeline investigativa",
+  "area": "Timeline",
+  "screen": "Investigation Timeline",
+  "feature": "Organiza eventos em ordem temporal para reconstruir a cadeia do incidente.",
+  "purpose": "Mostra causa e consequência, reduzindo decisões baseadas em alertas soltos.",
+  "user": "Incident Responders, SOC N2/N3, DFIR e gestores de crise.",
+  "decision": "Identificar ponto inicial, progressão, impacto e janela de contenção.",
+  "example": "08:41 Word abre PowerShell; 08:43 LSASS é acessado; 08:46 surge beacon DNS; 08:49 há leitura cloud anômala.",
+  "text": "Timeline responde a pergunta que todo incidente sério faz: o que aconteceu primeiro, depois e por quê.",
+  "task": "A timeline mostra phishing antes de credential access e depois cloud access. O que isso muda?",
+  "choices": [
+   "Sugere cadeia de ataque com provável entrada por e-mail, execução no endpoint, roubo de credencial e impacto cloud.",
+   "Mostra apenas coincidência temporal; cada evento deve ser tratado por times separados sem correlação.",
+   "Indica que cloud foi a causa inicial, porque aparece como impacto final de maior negócio.",
+   "Elimina a necessidade de preservar endpoint, pois o incidente já chegou na nuvem."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Process Tree endpoint",
+  "area": "Process Tree",
+  "screen": "Process Tree",
+  "feature": "Mostra relação pai-filho de processos, command line, hash, usuário, arquivo e técnicas MITRE.",
+  "purpose": "Ajuda a diferenciar execução legítima de cadeia maliciosa e escolher contenção precisa.",
+  "user": "Endpoint Security Analyst, DFIR e Threat Hunters.",
+  "decision": "Decidir se deve matar processo, quarentenar arquivo, isolar host ou escalar.",
+  "example": "WINWORD.EXE inicia PowerShell ofuscado, que chama rundll32 e acessa LSASS.",
+  "text": "Process Tree é onde o endpoint deixa de ser um alerta e vira uma narrativa técnica verificável.",
+  "task": "Word abriu PowerShell ofuscado, que executou rundll32 e tentou acessar LSASS. Melhor resposta inicial?",
+  "choices": [
+   "Conter o host, preservar a árvore de processos e coletar artefatos antes de ações destrutivas.",
+   "Encerrar somente o Word, porque ele é o processo pai e isso elimina todos os riscos.",
+   "Ignorar se o hash ainda não aparece como malware conhecido em threat intel.",
+   "Apagar o arquivo para limpar evidência e reduzir ruído no console."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Sensor Health",
+  "area": "Sensors",
+  "screen": "Sensor Health",
+  "feature": "Monitora sensor offline, versão atrasada, tamper, atraso de telemetria e fila de eventos.",
+  "purpose": "Mostra se o XDR está realmente enxergando o ambiente ou se há cegueira operacional.",
+  "user": "SOC Admin, plataforma, operações de endpoint e gestores de cobertura.",
+  "decision": "Priorizar correção de cobertura antes de confiar totalmente no silêncio de alertas.",
+  "example": "Um host executivo offline há 18 minutos durante campanha de phishing deve virar prioridade de validação.",
+  "text": "Sem sensor saudável, ausência de alerta não significa ausência de ataque. Pode significar ausência de visibilidade.",
+  "task": "Um notebook executivo está offline e a campanha de phishing está ativa. Qual ação é mais correta?",
+  "choices": [
+   "Tratar como gap de visibilidade relevante, acionar validação do sensor e cruzar e-mail, identidade e rede.",
+   "Considerar seguro porque endpoint offline não envia alerta crítico.",
+   "Remover o ativo do inventário para melhorar o percentual de saúde do ambiente.",
+   "Aguardar o próximo ciclo semanal de atualização dos agentes."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Threat Intel",
+  "area": "Threat Intel",
+  "screen": "Threat Intel",
+  "feature": "Enriquece eventos com IOCs, confiança, tipo, fonte, validade e contexto de campanha.",
+  "purpose": "Ajuda a priorizar resposta, mas não substitui evidência local e análise de impacto.",
+  "user": "Threat Hunters, Detection Engineers, SOC Analysts e IR.",
+  "decision": "Decidir quando aplicar IOC, quando caçar retroativamente e quando esperar mais confiança.",
+  "example": "Domínio C2 com alta confiança e beaconing local confirmado justifica bloqueio e hunting retroativo.",
+  "text": "Threat Intel boa tem confiança, expiração e contexto. IOC sem contexto vira ruído caro.",
+  "task": "Um domínio aparece em feed com alta confiança e há beaconing DNS no NDR. Melhor ação?",
+  "choices": [
+   "Bloquear o domínio, caçar conexões históricas, correlacionar endpoints e registrar evidência no caso.",
+   "Bloquear todos os domínios do mesmo TLD para eliminar variações futuras.",
+   "Ignorar até que o fabricante do antivírus classifique como malware.",
+   "Aplicar o IOC somente no host afetado e não investigar escopo."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Approval Workflow",
+  "area": "Approvals",
+  "screen": "Approval Workflow",
+  "feature": "Exige aprovação para ações disruptivas como isolar servidor crítico, revogar sessões em massa ou bloquear IOC global.",
+  "purpose": "Protege o negócio contra automações perigosas e cria trilha de decisão auditável.",
+  "user": "SOC Admin, Incident Manager, Tier-2/Tier-3 e gestores de mudança.",
+  "decision": "Aprovar, rejeitar ou pedir mais evidência antes de uma resposta de alto impacto.",
+  "example": "Isolar um Domain Controller exige dupla aprovação; isolar uma workstation comum pode ser permitido ao Endpoint Analyst.",
+  "text": "Workflow de aprovação é a diferença entre resposta rápida e resposta irresponsável.",
+  "task": "O playbook quer revogar sessões de 42 usuários após suspeita de OAuth abuse. O que é mais adequado?",
+  "choices": [
+   "Exigir aprovação com escopo, evidências e impacto antes da ação massiva, mantendo contenções pontuais permitidas.",
+   "Executar imediatamente para todos os usuários, porque identidade comprometida sempre exige ação máxima.",
+   "Negar qualquer revogação, pois pode gerar chamados no Service Desk.",
+   "Transferir para o usuário decidir se quer encerrar a própria sessão."
+  ],
+  "ok": "0"
+ },
+ {
+  "title": "Multi-tenant e MSSP Mode",
+  "area": "Tenants",
+  "screen": "MSSP Tenants",
+  "feature": "Separa clientes, SLAs, retenção, ativos, risco, políticas e contexto operacional.",
+  "purpose": "Permite operar SOCaaS sem misturar dados, permissões ou prioridades de clientes diferentes.",
+  "user": "MSSP, SOC Manager, Customer Success, analistas multi-cliente e pré-vendas.",
+  "decision": "Trocar contexto de cliente, respeitar SLA e priorizar incidente conforme risco do tenant.",
+  "example": "Governo Delta pode exigir retenção de 5 anos; Varejo Lima pode ter SLA e escopo diferentes.",
+  "text": "Multi-tenant não é só um dropdown. É isolamento de contexto, governança, SLA e evidência.",
+  "task": "Dois tenants têm alertas high, mas um é hospital com SLA crítico de 10 minutos e ativo sensível. Melhor priorização?",
+  "choices": [
+   "Priorizar considerando SLA, criticidade do ativo, impacto e risco do tenant, sem misturar evidências entre clientes.",
+   "Atender primeiro o tenant com mais ativos, porque volume sempre representa maior risco.",
+   "Executar o mesmo playbook em todos os tenants para padronizar a operação.",
+   "Copiar evidências entre tenants para acelerar a análise comparativa."
+  ],
+  "ok": "0"
+ }
 ].map((l,idx)=>({...l,token:xorHex(String(idx)+':'+l.ok,SALT)}));
+
 function $(id){return document.getElementById(id)}
 function has(perm){const p=ROLES[state.role].perms;return p.includes('*')||p.includes(perm)}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2600)}
@@ -202,7 +425,7 @@ function profileHint(){const r=ROLES[$('profile').value];$('profileHint').innerH
 function start(){const n=$('studentName').value.trim();if(!n){toast('Digite o nome do aluno primeiro.');return}state.student=n;state.role=$('profile').value;state.policies=JSON.parse(JSON.stringify(defaultPolicies));$('who').textContent=n;$('roleBadge').textContent=ROLES[state.role].label;$('login').classList.add('hidden');$('app').classList.remove('hidden');applyRbacUI();render('overview');audit('login','PERMITIDO','session.start')}
 function applyRbacUI(){document.querySelectorAll('.nav').forEach(n=>{const p=n.dataset.perm;const allowed=!p||has(p);n.classList.toggle('locked',!allowed);if(!allowed)n.title='Sem permissão: '+p});document.querySelectorAll('[data-action-perm]').forEach(b=>{const ok=has(b.dataset.actionPerm);b.disabled=!ok;b.title=ok?'':'Sem permissão: '+b.dataset.actionPerm});document.querySelectorAll('.quick').forEach(b=>{const ok=has(b.dataset.perm);b.disabled=!ok;b.title=ok?'':'Sem permissão: '+b.dataset.perm});renderPermSummary();}
 function renderPermSummary(){const important=['endpoint.isolate','endpoint.block_hash','siem.rule.create','policy.edit.endpoint','rbac.manage','soar.execute.critical','identity.revoke_session','report.export'];$('permissionSummary').innerHTML=important.map(p=>`<div class="permCard"><b>${has(p)?'✅':'⛔'} ${p}</b><span>${has(p)?'Permitido':'Bloqueado'}</span></div>`).join('')}
-function render(view){const nav=document.querySelector(`.nav[data-view="${view}"]`);if(nav&&nav.dataset.perm&&!has(nav.dataset.perm)){deny(nav.dataset.perm,'abrir tela '+view);return}state.view=view;state.completed[view]=true;document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===view));const titles={overview:['Security Operations Overview','Resumo em tempo real de risco, telemetria e resposta.'],rbac:['RBAC Matrix','Permissões efetivas do perfil selecionado e comparação entre funções.'],detections:['Detections Workbench','Alertas normalizados com fonte, técnica, entidade e evidência.'],assets:['Endpoint Inventory','Inventário de agentes, sistemas, grupos, status e criticidade.'],graph:['Threat Graph','Grafo de ameaça conectando EDR, ITDR, Cloud, NDR e Email.'],siem:['SIEM Search','Consulta funcional em eventos normalizados com filtro e estatísticas.'],soar:['SOAR Playbooks','Playbooks executáveis passo a passo com log operacional.'],policies:['Policy Center','Políticas configuráveis com aplicação de RBAC por domínio.'],timeline:['Investigation Timeline','Linha do tempo investigativa com eventos encadeados.'],process:['Process Tree','Árvore de processos com command line, hash e comportamento.'],sensors:['Sensor Health','Saúde dos sensores, atraso de telemetria e tamper status.'],intel:['Threat Intel','Feeds de IOC, confiança, expiração e enriquecimento.'],approvals:['Approval Workflow','Fluxo de aprovação para ações disruptivas.'],tenants:['MSSP Tenants','Modo multi-tenant com SLA, retenção e risco por cliente.'],itdr:['ITDR','Detecção e resposta a ameaças de identidade.'],cloud:['Cloud Security','CSPM, CWPP, containers, chaves e audit trail.'],ndr:['NDR','DNS, NetFlow, beaconing e movimento lateral.'],email:['Email Security','Campanhas de phishing, anexos, URL e mailbox telemetry.'],exposure:['Exposure Management','Risco por vulnerabilidade, ativo crítico e caminho de ataque.'],cases:['Case Management','Gestão de incidentes, responsáveis, status e evidências.'],academy:['Curso Guiado','Aprendizado guiado por feature, com mini-desafios realistas.']};$('title').textContent=titles[view][0];$('desc').textContent=titles[view][1];let html='';if(view==='overview')html=overview();if(view==='rbac')html=rbac();if(view==='detections')html=detections();if(view==='assets')html=table(['Host','SO','Grupo','Status','Sensor','Risco'],assets);if(view==='graph')html=graph();if(view==='siem')html=siem();if(view==='soar')html=soar();if(view==='policies')html=policies();if(view==='timeline')html=timeline();if(view==='process')html=processTree();if(view==='sensors')html=sensorHealth();if(view==='intel')html=threatIntel();if(view==='approvals')html=approvalWorkflow();if(view==='tenants')html=tenantView();if(view==='itdr')html=simple('ITDR Findings',[['m.santos','Impossible travel + risky OAuth','High','Revogar sessão'],['svc-backup','Caminho até Domain Admin','Critical','Rotacionar segredo'],['admin.temp','Novo privilégio crítico','High','Aprovação obrigatória']]);if(view==='cloud')html=simple('Cloud Findings',[['AWS S3','Download anômalo','High','Conter chave'],['K8S-NODE-07','Reverse shell em container','Critical','Kill pod'],['Azure','Service principal amplo','High','Revogar consent']]);if(view==='ndr')html=simple('NDR Findings',[['FIN-SRV-02','DNS beaconing','High','Bloquear domínio'],['WS-2044','SMB lateral burst','High','Segmentar'],['K8S-NODE-07','Rare ASN outbound','Medium','Inspecionar']]);if(view==='email')html=simple('Email Findings',[['BS-PH-882','Campanha phishing financeiro','High','Quarentenar'],['invoice.iso','Sandbox malicioso','Critical','Bloquear hash'],['CEO-NB-01','User reported phish','Medium','Investigar']]);if(view==='exposure')html=simple('Exposure Findings',[['CVE crítica','23 ativos afetados','Critical','Priorizar'],['Attack path','Workstation para Domain Admin','High','Quebrar caminho'],['VPN externo','Postura fraca','High','Endurecer']]);if(view==='cases')html=simple('Cases',[['BS-IR-2044','Credential access endpoint financeiro','Critical','Open'],['BS-CLD-1088','Cloud data access','High','Open'],['BS-ID-7741','Risky OAuth consent','High','Pending']]);if(view==='academy')html=academy();$('content').innerHTML=html;bindDynamic();updateProgress();applyRbacUI();}
+function render(view){const nav=document.querySelector(`.nav[data-view="${view}"]`);if(nav&&nav.dataset.perm&&!has(nav.dataset.perm)){deny(nav.dataset.perm,'abrir tela '+view);return}state.view=view;state.completed[view]=true;document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===view));const titles={overview:['Security Operations Overview','Resumo em tempo real de risco, telemetria e resposta.'],rbac:['RBAC Matrix','Permissões efetivas do perfil selecionado e comparação entre funções.'],detections:['Detections Workbench','Alertas normalizados com fonte, técnica, entidade e evidência.'],assets:['Endpoint Inventory','Inventário de agentes, sistemas, grupos, status e criticidade.'],graph:['Threat Graph','Grafo de ameaça conectando EDR, ITDR, Cloud, NDR e Email.'],siem:['SIEM Search','Consulta funcional em eventos normalizados com filtro e estatísticas.'],soar:['SOAR Playbooks','Playbooks executáveis passo a passo com log operacional.'],policies:['Policy Center','Políticas configuráveis com aplicação de RBAC por domínio.'],timeline:['Investigation Timeline','Linha do tempo investigativa com eventos encadeados.'],process:['Process Tree','Árvore de processos com command line, hash e comportamento.'],sensors:['Sensor Health','Saúde dos sensores, atraso de telemetria e tamper status.'],intel:['Threat Intel','Feeds de IOC, confiança, expiração e enriquecimento.'],approvals:['Approval Workflow','Fluxo de aprovação para ações disruptivas.'],tenants:['MSSP Tenants','Modo multi-tenant com SLA, retenção e risco por cliente.'],itdr:['ITDR','Detecção e resposta a ameaças de identidade.'],cloud:['Cloud Security','CSPM, CWPP, containers, chaves e audit trail.'],ndr:['NDR','DNS, NetFlow, beaconing e movimento lateral.'],email:['Email Security','Campanhas de phishing, anexos, URL e mailbox telemetry.'],exposure:['Exposure Management','Risco por vulnerabilidade, ativo crítico e caminho de ataque.'],cases:['Case Management','Gestão de incidentes, responsáveis, status e evidências.'],academy:['Tour Guiado','Explicação didática das features, uso no SOC e decisões operacionais.']};$('title').textContent=titles[view][0];$('desc').textContent=titles[view][1];let html='';if(view==='overview')html=overview();if(view==='rbac')html=rbac();if(view==='detections')html=detections();if(view==='assets')html=table(['Host','SO','Grupo','Status','Sensor','Risco'],assets);if(view==='graph')html=graph();if(view==='siem')html=siem();if(view==='soar')html=soar();if(view==='policies')html=policies();if(view==='timeline')html=timeline();if(view==='process')html=processTree();if(view==='sensors')html=sensorHealth();if(view==='intel')html=threatIntel();if(view==='approvals')html=approvalWorkflow();if(view==='tenants')html=tenantView();if(view==='itdr')html=simple('ITDR Findings',[['m.santos','Impossible travel + risky OAuth','High','Revogar sessão'],['svc-backup','Caminho até Domain Admin','Critical','Rotacionar segredo'],['admin.temp','Novo privilégio crítico','High','Aprovação obrigatória']]);if(view==='cloud')html=simple('Cloud Findings',[['AWS S3','Download anômalo','High','Conter chave'],['K8S-NODE-07','Reverse shell em container','Critical','Kill pod'],['Azure','Service principal amplo','High','Revogar consent']]);if(view==='ndr')html=simple('NDR Findings',[['FIN-SRV-02','DNS beaconing','High','Bloquear domínio'],['WS-2044','SMB lateral burst','High','Segmentar'],['K8S-NODE-07','Rare ASN outbound','Medium','Inspecionar']]);if(view==='email')html=simple('Email Findings',[['BS-PH-882','Campanha phishing financeiro','High','Quarentenar'],['invoice.iso','Sandbox malicioso','Critical','Bloquear hash'],['CEO-NB-01','User reported phish','Medium','Investigar']]);if(view==='exposure')html=simple('Exposure Findings',[['CVE crítica','23 ativos afetados','Critical','Priorizar'],['Attack path','Workstation para Domain Admin','High','Quebrar caminho'],['VPN externo','Postura fraca','High','Endurecer']]);if(view==='cases')html=simple('Cases',[['BS-IR-2044','Credential access endpoint financeiro','Critical','Open'],['BS-CLD-1088','Cloud data access','High','Open'],['BS-ID-7741','Risky OAuth consent','High','Pending']]);if(view==='academy')html=academy();$('content').innerHTML=html;bindDynamic();updateProgress();applyRbacUI();}
 function bindDynamic(){if(state.view==='siem'){const q=$('siemQuery');if(q)q.addEventListener('keydown',e=>{if(e.key==='Enter')runSiem()})}if(state.view==='academy'){document.querySelectorAll('[data-lesson]').forEach(el=>el.onclick=()=>{state.lessonIndex=Number(el.dataset.lesson);render('academy')});document.querySelectorAll('.lessonChoice').forEach(el=>el.onclick=()=>answerLesson(Number(el.dataset.choice)));}if(state.view==='policies'){document.querySelectorAll('[data-policy-id]').forEach(el=>el.onchange=()=>updatePolicy(el.dataset.policyId,el.dataset.field,el.type==='checkbox'?el.checked:el.value));}}
 function sev(s){const v=String(s);if(v==='Critical'||v==='Crítico')return `<span class="badge critical">${v}</span>`;if(v==='High'||v==='Alto')return `<span class="badge high">${v}</span>`;if(v==='Medium'||v==='Médio')return `<span class="badge medium">${v}</span>`;if(v==='Low')return `<span class="badge low">${v}</span>`;return v}
 function table(head,rows){return `<div class="panel"><div class="tableWrap"><table class="table"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${sev(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`}
@@ -239,7 +462,7 @@ function sensorHealth(){return `<div class="panel"><h3>Sensor Health</h3><p>XDR 
 function threatIntel(){return `<div class="panel"><h3>Threat Intel Feed</h3><p>Feeds de inteligência enriquecem alertas, mas precisam de confiança, validade e ação clara.</p>${iocs.map(i=>`<div class="ioc"><div><b>${i[0]}</b><br><span class="muted">${i[1]} • ${i[3]} • ${i[4]}</span></div><span class="badge ${i[2]==='Critical'?'critical':i[2]==='High'?'high':'medium'}">${i[2]}</span><button class="btn silver" onclick="guard('endpoint.block_hash','aplicar IOC ${i[0]}',()=>runAction('IOC aplicado: ${i[0]}'))">Aplicar IOC</button></div>`).join('')}</div>`}
 function approvalWorkflow(){return `<div class="panel"><h3>Approval Workflow</h3><p>Ações disruptivas em ambiente enterprise não devem ser liberadas para qualquer perfil. Aqui, aprovação deixa a simulação mais realista.</p>${approvals.map(a=>`<div class="approval"><div><b>${a.id} • ${a.action}</b><br><span class="muted">${a.why} • permissão: ${a.perm} • ${a.status}</span></div><div><button class="btn good" onclick="guard('${a.perm}','aprovar ${a.id}',()=>runAction('${a.id} aprovado'))">Aprovar</button> <button class="btn silver" onclick="guard('${a.perm}','rejeitar ${a.id}',()=>runAction('${a.id} rejeitado'))">Rejeitar</button></div></div>`).join('')}</div>`}
 function tenantView(){return `<div class="grid2"><div class="panel"><h3>MSSP / Multi-tenant Mode</h3><p>Cada cliente possui SLA, retenção, volume de ativos e risco próprio. A troca de tenant altera o contexto do overview.</p>${tenants.map(t=>`<div class="tenantPill ${state.tenant===t.name?'active':''}" onclick="state.tenant='${t.name}';audit('trocar tenant para ${t.name}','PERMITIDO','tenant.view');render('tenants')"><b>${t.name}</b><br><span class="muted">SLA: ${t.sla} • Retenção: ${t.retention} • Ativos: ${t.assets.toLocaleString('pt-BR')} • Risco: ${t.risk}</span></div>`).join('')}</div><div class="panel"><h3>MITRE Coverage por tenant</h3><div class="grid4">${['Initial Access','Execution','Persistence','Privilege Escalation','Defense Evasion','Credential Access','Discovery','Lateral Movement','Collection','Command and Control','Exfiltration','Impact'].map((x,i)=>`<div class="coverageCell ${i%3===0?'partial':'on'}">${x}<br>${i%3===0?'parcial':'coberto'}</div>`).join('')}</div></div></div>`}
-function academy(){const l=lessons[state.lessonIndex];const steps=lessons.map((x,i)=>`<div class="step ${i===state.lessonIndex?'active ':''}${state.completed['lesson'+i]?'done':''}" data-lesson="${i}"><b>${i+1}. ${x.area}</b><span>${x.title}</span></div>`).join('');const choices=l.choices.map((c,i)=>`<button class="btn silver lessonChoice" data-choice="${i}">${c}</button>`).join('');return `<div class="courseLayout"><div class="panel"><h3>Roteiro</h3>${steps}</div><div class="lesson"><span class="badge medium">${l.area}</span><h3>${l.title}</h3><p>${l.text}</p><div class="callout"><b>Contexto:</b> responda como se estivesse operando uma plataforma enterprise, priorizando evidência, menor privilégio, impacto e governança.</div><h3>Mini-desafio</h3><p>${l.task}</p><div class="choice">${choices}</div><div style="display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn silver" onclick="prevLesson()">Voltar</button><button class="btn primary" onclick="completeLesson()">Marcar como concluído</button><button class="btn silver" onclick="nextLesson()">Próximo</button></div></div></div>`}
+function academy(){const l=lessons[state.lessonIndex];const steps=lessons.map((x,i)=>`<div class="step ${i===state.lessonIndex?'active ':''}${state.completed['lesson'+i]?'done':''}" data-lesson="${i}"><b>${i+1}. ${x.area}</b><span>${x.title}</span></div>`).join('');const choices=l.choices.map((c,i)=>`<button class="btn silver lessonChoice" data-choice="${i}">${c}</button>`).join('');return `<div class="courseLayout"><div class="panel"><h3>Tour guiado didático</h3><p class="muted">Cada etapa explica a feature, quem usa, por que existe e qual decisão operacional ela apoia.</p>${steps}</div><div class="lesson"><span class="badge medium">${l.area}</span><h3>${l.title}</h3><div class="grid2"><div class="feat"><b>O que é</b><span>${l.feature}</span></div><div class="feat"><b>Por que existe</b><span>${l.purpose}</span></div><div class="feat"><b>Quem usa no SOC</b><span>${l.user}</span></div><div class="feat"><b>Decisão que apoia</b><span>${l.decision}</span></div></div><div class="callout" style="margin-top:12px"><b>Exemplo prático:</b> ${l.example}</div><p>${l.text}</p><div class="callout"><b>Como usar na tela ${l.screen}:</b> observe evidências, permissões, impacto e contexto antes de executar qualquer ação.</div><h3>Mini-desafio</h3><p>${l.task}</p><div class="choice">${choices}</div><div style="display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn silver" onclick="prevLesson()">Voltar</button><button class="btn primary" onclick="completeLesson()">Marcar como concluído</button><button class="btn silver" onclick="nextLesson()">Próximo</button></div></div></div>`}
 function answerLesson(i){const l=lessons[state.lessonIndex];const candidate=xorHex(String(state.lessonIndex)+':'+String(i),SALT);if(candidate===l.token){state.completed['lesson'+state.lessonIndex]=true;if(state.lessonIndex===lessons.length-1){state.labOK=true;state.completed.lab=true}toast('Correto. Essa é a decisão mais defensável.');audit('mini-desafio '+(state.lessonIndex+1),'CORRETO','academy.answer')}else{toast('Quase. A opção pode parecer correta, mas não é a mais defensável para governança e operação.');audit('mini-desafio '+(state.lessonIndex+1),'INCORRETO','academy.answer')}updateProgress();render('academy')}
 function completeLesson(){state.completed['lesson'+state.lessonIndex]=true;if(state.lessonIndex===lessons.length-1){state.labOK=true;state.completed.lab=true}else state.lessonIndex++;updateProgress();render('academy')}
 function nextLesson(){if(state.lessonIndex<lessons.length-1)state.lessonIndex++;render('academy')}function prevLesson(){if(state.lessonIndex>0)state.lessonIndex--;render('academy')}
